@@ -335,4 +335,6 @@ class PreferencesHelper(val context: Context) {
             putInt(Keys.defaultChapterSortByAscendingOrDescending, if (manga.sortDescending()) Manga.CHAPTER_SORT_DESC else Manga.CHAPTER_SORT_ASC)
         }
     }
+
+    fun fabButtonHorizontalAlignment() = flowPrefs.getInt(Keys.fabButtonHorizontalAlignment, 1)
 }

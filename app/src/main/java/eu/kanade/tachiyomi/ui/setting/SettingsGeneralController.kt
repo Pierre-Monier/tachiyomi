@@ -54,5 +54,16 @@ class SettingsGeneralController : SettingsController() {
                 }
             }
         }
+        intListPreference {
+            key = Keys.fabButtonHorizontalAlignment
+            titleRes = R.string.pref_fab_button_horizontal_alignment
+            entriesRes = arrayOf(
+                R.string.fab_button_horizontal_alignment_right,
+                R.string.fab_button_horizontal_alignment_left,
+            )
+            entryValues = arrayOf("1", "2")
+            defaultValue = "1"
+            summary = "%s"
+        }
     }
 }

@@ -79,6 +79,8 @@ object PreferenceKeys {
 
     const val autoClearChapterCache = "auto_clear_chapter_cache"
 
+    const val fabButtonHorizontalAlignment = "fab_button_horizontal_alignment"
+
     fun trackUsername(syncId: Int) = "pref_mangasync_username_$syncId"
 
     fun trackPassword(syncId: Int) = "pref_mangasync_password_$syncId"
