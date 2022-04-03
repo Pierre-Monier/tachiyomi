@@ -183,6 +183,11 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>() {
                             router.pushController(DownloadController().withFadeTransaction())
                         }
                     }
+                    R.id.nav_history -> {
+                        if (router.backstackSize == 1) {
+                            openLastReadChapter()
+                        }
+                    }
                     R.id.nav_more -> {
                         if (router.backstackSize == 1) {
                             router.pushController(SettingsMainController().withFadeTransaction())
@@ -464,7 +469,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>() {
 
         // Binding sometimes isn't actually instantiated yet somehow
         nav?.setOnItemSelectedListener(null)
-        binding?.toolbar.setNavigationOnClickListener(null)
+        binding?.toolbar?.setNavigationOnClickListener(null)
     }
 
     override fun onBackPressed() {
@@ -622,6 +627,15 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>() {
 
     private fun showSideNav(visible: Boolean) {
         binding.sideNav?.isVisible = visible
+    }
+
+    private fun openLastReadChapter() {
+        try {
+            val historyController = router.backstack[0].controller as HistoryController
+            historyController.resumeLastChapterRead()
+        } catch (e: Exception) {
+            toast(R.string.cant_open_last_read_chapter)
+        }
     }
 
     private val nav: NavigationBarView

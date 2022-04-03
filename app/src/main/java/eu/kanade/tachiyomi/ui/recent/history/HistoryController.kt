@@ -1,6 +1,7 @@
 package eu.kanade.tachiyomi.ui.recent.history
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -157,17 +158,35 @@ class HistoryController :
 
     override fun noMoreLoad(newItemsSize: Int) {}
 
+    fun resumeLastChapterRead(position: Int = 1) {
+        val activity = activity ?: return
+        val readerIntent = getReaderIntent(position)
+        if (readerIntent != null) {
+            startActivity(readerIntent)
+        } else if (adapter != null && position < adapter!!.itemCount) {
+            resumeLastChapterRead(position = position + 1)
+        } else {
+            activity.toast(R.string.cant_open_last_read_chapter)
+        }
+    }
+
     override fun onResumeClick(position: Int) {
         val activity = activity ?: return
-        val (manga, chapter, _) = (adapter?.getItem(position) as? HistoryItem)?.mch ?: return
-
-        val nextChapter = presenter.getNextChapter(chapter, manga)
-        if (nextChapter != null) {
-            val intent = ReaderActivity.newIntent(activity, manga, nextChapter)
-            startActivity(intent)
+        val readerIntent = getReaderIntent(position)
+        if (readerIntent != null) {
+            startActivity(readerIntent)
         } else {
             activity.toast(R.string.no_next_chapter)
         }
+    }
+
+    private fun getReaderIntent(position: Int): Intent? {
+        val activity = activity ?: return null
+        val (manga, chapter, _) = (adapter?.getItem(position) as? HistoryItem)?.mch ?: return null
+
+        val nextChapter = presenter.getNextChapter(chapter, manga) ?: return null
+
+        return ReaderActivity.newIntent(activity, manga, nextChapter)
     }
 
     override fun onRemoveClick(position: Int) {
