@@ -163,6 +163,7 @@ class HistoryController :
         if (readerIntent != null) {
             startActivity(readerIntent)
         } else if (adapter != null && position < adapter!!.itemCount) {
+            showResumeLastReadChapterErrorToast(position)
             resumeLastChapterRead(position = position + 1)
         } else {
             showResumeLastReadChapterErrorToast(position)
@@ -171,9 +172,10 @@ class HistoryController :
 
     private fun showResumeLastReadChapterErrorToast(position: Int) {
         val mangaName = getMangaName(position)
-
-        if (mangaName != null) {
-            activity?.toast("${R.string.no_last_read_chapter} $mangaName")
+        val resResources = resources
+        
+        if (mangaName != null && resResources != null) {
+            activity?.toast("${resResources.getString(R.string.no_last_read_chapter)} $mangaName")
         } else {
             activity?.toast(R.string.cant_open_last_read_chapter)
         }
