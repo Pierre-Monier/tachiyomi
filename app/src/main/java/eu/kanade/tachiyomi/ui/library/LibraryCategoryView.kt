@@ -111,6 +111,8 @@ class LibraryCategoryView @JvmOverloads constructor(context: Context, attrs: Att
             .onEach {
                 if (LibraryUpdateService.start(context, category)) {
                     context.toast(R.string.updating_category)
+                } else {
+                    context.toast(R.string.pushing_update_to_queue)
                 }
 
                 // It can be a very long operation, so we disable swipe refresh and show a toast.

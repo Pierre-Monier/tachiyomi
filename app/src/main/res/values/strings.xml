@@ -699,6 +699,7 @@
 
     <!-- Updates fragment -->
     <string name="updating_library">Updating library</string>
+    <string name="pushing_update_to_queue">Already updating, pushing update to queue</string>
 
     <!-- History fragment -->
     <string name="recent_manga_time">Ch. %1$s - %2$s</string>
