@@ -159,14 +159,23 @@ class HistoryController :
     override fun noMoreLoad(newItemsSize: Int) {}
 
     fun resumeLastChapterRead(position: Int = 1) {
-        val activity = activity ?: return
         val readerIntent = getReaderIntent(position)
         if (readerIntent != null) {
             startActivity(readerIntent)
         } else if (adapter != null && position < adapter!!.itemCount) {
             resumeLastChapterRead(position = position + 1)
         } else {
-            activity.toast(R.string.cant_open_last_read_chapter)
+            showResumeLastReadChapterErrorToast(position)
+        }
+    }
+
+    private fun showResumeLastReadChapterErrorToast(position: Int) {
+        val mangaName = getMangaName(position)
+
+        if (mangaName != null) {
+            activity?.toast("${R.string.no_last_read_chapter} $mangaName")
+        } else {
+            activity?.toast(R.string.cant_open_last_read_chapter)
         }
     }
 
@@ -187,6 +196,15 @@ class HistoryController :
         val nextChapter = presenter.getNextChapter(chapter, manga) ?: return null
 
         return ReaderActivity.newIntent(activity, manga, nextChapter)
+    }
+
+    private fun getMangaName(position: Int): String? {
+        if (activity == null) {
+            return null
+        }
+        val (manga, _, _) = (adapter?.getItem(position) as? HistoryItem)?.mch ?: return null
+
+        return manga.title
     }
 
     override fun onRemoveClick(position: Int) {
