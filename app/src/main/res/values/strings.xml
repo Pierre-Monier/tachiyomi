@@ -706,7 +706,7 @@
     <string name="clear_history_completed">History deleted</string>
     <string name="clear_history_confirmation">Are you sure? All history will be lost.</string>
     <string name="cant_open_last_read_chapter">Unable to open last read chapter</string>
-    <string name="no_last_read_chapter">No unread chapter for</string>
+    <string name="no_last_read_chapter">No unread chapter for %1$s</string>
 
     <!-- Source migration screen -->
     <string name="migration_help_guide">Source migration guide</string>

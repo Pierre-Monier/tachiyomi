@@ -173,9 +173,9 @@ class HistoryController :
     private fun showResumeLastReadChapterErrorToast(position: Int) {
         val mangaName = getMangaName(position)
         val resResources = resources
-        
+
         if (mangaName != null && resResources != null) {
-            activity?.toast("${resResources.getString(R.string.no_last_read_chapter)} $mangaName")
+            activity?.toast(String.format(resResources.getString(R.string.no_last_read_chapter), mangaName))
         } else {
             activity?.toast(R.string.cant_open_last_read_chapter)
         }
